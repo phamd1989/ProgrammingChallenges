@@ -264,14 +264,7 @@ public class Combinations
 		// sort sum_positive in descending order 
 		// and make sure the order of each subset is changed accordingly in positive_arraylist  
 		positiveDescending(sum_positive, positive_arraylist);
-		
-		//System.out.println(sum_positive.toString());
-		
-		/*for(int i = 0; i<sum_positive.length;i++)
-		{
-			System.out.println(sum_positive[i]);
-		}*/
-		
+				
 		// pretty much the same procedure as above, except sort the negative sum in ascending order
 		int[] list2 = new int[data_negative.size()];
 		for (int i =0; i<list2.length;i++)
@@ -282,11 +275,6 @@ public class Combinations
 		getAllSubset(list2, negative_arraylist);
 		int[] sum_negative = sumAll(negative_arraylist);
 		negativeAscending(sum_negative, negative_arraylist);
-		
-		/*for(int i = 0; i<sum_negative.length;i++)
-		{
-			System.out.println(sum_negative[i]);
-		}*/
 		
 		// if either of the negative or positive set is empty, no solution
 		if ((sum_positive.length == 0) || (sum_negative.length == 0))
