@@ -1,0 +1,113 @@
+import math, time
+listOfPalins = [0]
+SquareAndFair = []
+
+def makePalindrome(numOfDigits):
+    s = []
+    s.append('1')
+    maxNum = '9'
+        
+    numTemp = numOfDigits - 1
+    while (numTemp > 0):
+        s.append('0')
+        maxNum = maxNum + '9'
+        numTemp -= 1
+    #newS = s
+    maxNum = int(maxNum)
+    if (len(s)%2==0): # even number of digits, change both the middle digits
+        while (int(''.join(s)) <= maxNum):
+
+            for i in range(len(s)/2,len(s)):
+                s[i] = s[len(s)-1-i]
+
+            listOfPalins.append(int(''.join(s)))
+            
+            pos = len(s)/2 - 1
+            if (int(s[pos]) == 9): # overhead
+                if pos==0:
+                    break
+                s[pos] = '0'
+                for i in range(pos+1,numOfDigits):
+                    s[i] = '0'
+                pos -= 1
+                while(int(s[pos])==9 and pos>0):
+                    s[pos] = '0'
+                    pos -=1                   
+                s[pos] = str(int(s[pos])+1)
+                
+            else:
+                s[pos] = str(int(s[pos])+1)
+
+    else: # odd number of digits, change only the middle digit
+        
+        while (int(''.join(s)) <= maxNum):
+
+            for i in range(len(s)/2,len(s)):
+                s[i] = s[len(s)-1-i]
+            
+            listOfPalins.append(int(''.join(s)))
+            
+            pos = len(s)/2 # the only differnce between odd and even cases is here
+            if (int(s[pos]) == 9): # overhead
+                if pos==0:
+                    break
+                s[pos] = '0'
+                for i in range(pos+1,numOfDigits):
+                    s[i] = '0'
+                pos -= 1
+                while(int(s[pos])==9 and pos>0):
+                    s[pos] = '0'
+                    pos -=1                   
+                s[pos] = str(int(s[pos])+1)
+                
+            else:
+                s[pos] = str(int(s[pos])+1)
+
+    return listOfPalins
+
+
+def isPalindrome(aNumber):
+    aString = str(aNumber)
+    left = 0
+    right = len(aString)-1
+    while (left <= right):
+        if (aString[left] != aString[right]):
+            return False
+        left += 1
+        right -= 1
+    return True
+
+def FairAndSquare(lB,uB):
+    left, right = 0, len(SquareAndFair)-1
+    while (left < right and SquareAndFair[left] < lB):
+        left = left + 1
+    while (SquareAndFair[right] > uB):
+        right = right - 1
+    return right - left + 1
+
+def main():
+
+    for i in range(7):
+        makePalindrome(i+1)
+
+    
+    for i in listOfPalins:
+        if (isPalindrome(i*i)):
+            SquareAndFair.append(i*i)
+
+    print len(SquareAndFair)
+    ##print SquareAndFair
+
+    myInput = open('input.txt','r')
+    myOutput = open('output.txt','w')
+
+    theLine = myInput.readline()
+    numOfRuns = int(theLine)
+    for i in range(numOfRuns):
+        theLine = myInput.readline()
+        arr = theLine.split()
+        myOutput.write('Case #' + str(i+1) + ': ' + str(FairAndSquare(int(arr[0]),int(arr[1])))+'\n')
+    myInput.close()
+    myOutput.close()
+
+main()
